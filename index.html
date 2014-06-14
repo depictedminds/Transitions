@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.2.min.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.2.min.js"></script>
+    <link rel="stylesheet" href="css/default.css" />
+
+
+
+    </head>
+    <script>
+
+        var slideShowing = true;
+        var slides =["images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg", "images/5.jpg"];
+        currentSlide = 1;
+
+        function animateSlider()
+        {
+
+            currentSlide++;
+            if (currentSlide > slides.length)
+            {
+                currentSlide = 1;
+            }
+            if (slideShowing)
+            {
+                   $("#slider").css("background-image", "url(" + slides[currentSlide-1] + ")");
+                   slideShowing = false;
+                   $("#slide").fadeOut("slow");
+            }
+            else
+            {
+                $("#slide").css("background-image", "url(" + slides[currentSlide-1] + ")");
+                slideShowing = true;
+                $("#slide").fadeIn("slow");
+             }
+        }
+
+
+        var myTimer = setInterval(animateSlider, 5000);
+
+
+    </script>
+<body>
+
+<div data-role="page" data-theme="b">
+
+    <div data-role="header" data-theme="b">
+        <h1>Restaurant or Similar</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+
+        <div id="slider">
+
+            <div id="slide">
+
+            </div>
+
+
+        </div>
+        <div class="smallContainer">
+            <div class="smallButton">Button A</div>
+            <div class="smallButton">Button B</div>
+            <div class="smallButton">Button C</div>
+        </div>
+        <div id="reviews">
+            <h2>Review Information</h2>
+            <p>Cupidatat et irure cernantur, cernantur elit cillum ingeniis fugiat e cupidatat
+                quo magna, singulis dolor hic quibusdam fidelissimae et si velit quorum quorum
+                expetendis do do duis exquisitaque est elit iudicem est instituendarum qui de
+                quem nescius coniunctione. Expetendis ubi appellat ex hic malis distinguantur. A
+                multos anim si singulis. Incurreret non iudicem ne laborum fore fugiat ut varias
+                o arbitror eruditionem te tempor, duis id occaecat. Occaecat nisi illum
+                consequat duis, illum de cernantur ex nulla. Ne nostrud ad fabulas hic commodo
+                noster laborum. Culpa ex incurreret ad duis.</p>
+        </div>
+
+
+    </div><!-- /content -->
+
+    <div data-role="footer" data-position="fixed">
+        <h4>&copy 2014 - depictedMINDS</h4>
+    </div><!-- /footer -->
+</div><!-- /page -->
+
+</body>
+</html>
