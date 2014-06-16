@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Page Title</title>
+<title>Page Title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.2.min.css" />
+<script src="js/jquery.js"></script>
+<script src="js/jquery.mobile-1.4.2.min.js"></script>
+<link rel="stylesheet" href="css/default.css" />
+</head>
+<script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.2.min.css" />
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery.mobile-1.4.2.min.js"></script>
-    <link rel="stylesheet" href="css/default.css" />
-
-
-
-    </head>
-    <script>
-
-        var slideShowing = true;
+		var slideShowing = true;
         var slides =["images/1.jpg", "images/2.jpg", "images/3.jpg", "images/4.jpg", "images/5.jpg"];
-        currentSlide = 1;
+        var myTimer = null;
+		var currentSlide = 1;
 
-        function animateSlider()
+		document.addEventListener("deviceready", onDeviceReady(), false);
+        
+        function onDeviceReady(){
+			
+			var myTimer = setInterval(animateSlider, 5000);
+		}
+		
+		function animateSlider()
         {
-
+			
             currentSlide++;
             if (currentSlide > slides.length)
             {
@@ -40,54 +44,207 @@
                 $("#slide").fadeIn("slow");
              }
         }
+				
+		
+		
+		$(document).on('pageinit', '#contact', function(){ 
+			$(document).on('click', '#submit', function() { // catch the form's submit event
+			   
+			   message = $('#contactform').serialize(); // Makes the data "Send" friendly.
+			   
+			   $.ajax({
+					url: 'http://www.depictedminds.com/app/processmail.php',
+					cache: false,
+					data: message,
+					async: 'false',
+					beforeSend: function() {
+						// This callback function will trigger before data is sent
+						$.mobile.loading("show"); // This will show ajax spinner
+					},
+					complete: function(obj, stat) {
+						// This callback function will trigger on data sent/received complete
+						$.mobile.loading("hide"); // This will hide ajax spinner
+						$.mobile.changePage("#thanks");
+					}
+				});
+								  
+				return false; // cancel original event to prevent form submitting
+			});   
+		});
+		
+		
+		
+				
+
+        
 
 
-        var myTimer = setInterval(animateSlider, 5000);
 
 
     </script>
 <body>
+<div data-role="page" id="home" data-theme="b">
+  <div data-role="header" data-theme="b">
+    <h1>Restaurant or Similar</h1>
+  </div>
+  <!-- /header -->
+  
+  <div role="main" class="ui-content">
+    <div id="slider">
+      <div id="slide"> </div>
+    </div>
+    <div class="smallContainer">
+      <ul data-role="listview" data-inset="true">
+        <li><a href="#info" data-transition="fade">Restaurant Information</a></li>
+        <li><a href="#specials" data-transition="fade">Current Specials</a></li>
+        <li><a href="#contact" data-transition="fade">Contact Us</a></li>
+      </ul>
+    </div>
+    <div id="reviews">
+      <h2>Review Information</h2>
+      <p>Cupidatat et irure cernantur, cernantur elit cillum ingeniis fugiat e cupidatat
+        quo magna, singulis dolor hic quibusdam fidelissimae et si velit quorum quorum
+        expetendis do do duis exquisitaque est elit iudicem est instituendarum qui de
+        quem nescius coniunctione. Expetendis ubi appellat ex hic malis distinguantur. A
+        multos anim si singulis. Incurreret non iudicem ne laborum fore fugiat ut varias
+        o arbitror eruditionem te tempor, duis id occaecat. Occaecat nisi illum
+        consequat duis, illum de cernantur ex nulla. Ne nostrud ad fabulas hic commodo
+        noster laborum. Culpa ex incurreret ad duis.</p>
+    </div>
+  </div>
+  <!-- /content -->
+  
+  <div data-role="footer" data-position="fixed">
+    <h4>&copy 2014 - depictedMINDS</h4>
+  </div>
+  <!-- /footer --> 
+</div>
+<!-- /page -->
 
-<div data-role="page" data-theme="b">
+<div data-role="page" id="info" data-theme="b">
+  <div data-role="header" data-theme="b" data-position="fixed"><a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" data-transition="fade" data-direction="reverse">Return</a>
+    <h1>Our History</h1>
+  </div>
+  <!-- /header -->
+  
+  <div role="main" class="ui-content">
+    <div class="slider">
+      <div class="slide"> </div>
+    </div>
+    <div id="history" style="text-align: center;">
+      <h2 style="text-align: center;">From small to not so small</h2>
+      <p>In a small town of somewhereville, two local chefs had an idea....
+      <blockquote>&quot;We can cook - so why not cook for other people?<br>
+        People eat, so why not make them pay to eat our food?<br>
+        People have money, we like money! Why not take some of their money?</blockquote>
+      </p>
+      <p>And thus, &lt;Restaurant Name Here &gt; was born.</p>
+      <p> 
+    </div>
+  </div>
+  <!-- /content -->
+  
+  <div data-role="footer" data-position="fixed">
+    <h4>&copy 2014 - depictedMINDS</h4>
+  </div>
+  <!-- /footer --> 
+</div>
+<!-- /page -->
 
-    <div data-role="header" data-theme="b">
-        <h1>Restaurant or Similar</h1>
-    </div><!-- /header -->
+<div data-role="page" id="specials" data-theme="b">
+  <div data-role="header" data-theme="b" data-position="fixed"><a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" data-transition="fade" data-direction="reverse">Return</a>
+    <h1>Our Specials</h1>
+  </div>
+  <!-- /header -->
+  
+  <div role="main" class="ui-content">
+    <div class="slider">
+      <div class="slide"> </div>
+    </div>
+    <div id="history">
+      <h2 style="text-align: center">Current specials of the day:</h2>
+      <h3>Cheese on toast</h3>
+      <p>A lovingly prepared slice of cheese, on a piece of bread heated to the precise temperature to turn it into toast.<br>
+        Served together on a plate.</p>
+      <em>Serves 1.</em>
+      <hr>
+      <h3>Cheese (sans-toast)</h3>
+      <p>A lovingly prepared slice of cheese, on a piece of bread heated to the precise temperature to turn it into toast.</p>
+      <p>Said toast is then removed, fed to the local wildlife, and slightly warm cheese is placed directly onto plate for your enjoyment<br>
+        Served on a plate. Note, cheese may stick to plate.</p>
+      <em>Serves 1, and some wildlife.</em>
+      <hr>
+      <h3>Smoked Pork Jowl with Pickles</h3>
+      <p>Slowly smoked cured pork jowl over pecan wood and served with thin slices of the luscious meat as an appetizer with as many pickled ingredients as possible, including house-made half-sour pickles, pickled chiles and pickled mustard seeds stirred into the blackstrap-molasses garnish.<br>
+        Seasonal requirements may result in said meat, pickled ingredients, and garnish being replaced with a slice of cheese.</p>
+      <em>Serves 1 (pending cheese availability)</em> </div>
+  </div>
+  <!-- /content -->
+  
+  <div data-role="footer" data-position="fixed">
+    <h4>&copy 2014 - depictedMINDS</h4>
+  </div>
+  <!-- /footer --> 
+</div>
+<!-- /page -->
 
-    <div role="main" class="ui-content">
+<div data-role="page" id="contact" data-theme="b"> 
+  <!-- an example of using some of jQueryMobile form elements --> 
+  <!-- Steve Lancaster -->
+  <div data-role="header" data-position="fixed"> <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" data-transition="fade" data-direction="reverse">Return</a>
+    <h1>Contact us - PLEASE!</h1>
+  </div>
+  <!-- /header -->
+  
+  <div role="main" class="ui-content">
+   <div class="slider" style="height: 100px;">
+      <div class="slide" style="height: 100px;"> </div>
+    </div>
+    <p style="text-align: center;">Want to contact us? Have an idea? Know anything about cheese? Fill in the form below:</p>
+    <form id="contactform" name="contactform" class="ui-body ui-body-b ui-corner-all" data-ajax="false" method="post">
+      <fieldset>
+      <label for="sender" class="ui-hidden-accessible">Your Email:</label>
+      <input type="email" name="sender" id="sender" value="" placeholder="Your Email" data-theme="a">
+      <label for="receiver" class="ui-hidden-accessible">Receiver Email:</label>
+      <input type="email" name="receiver" id="receiver" value="" placeholder="Reciever Email" data-theme="a">
+      <label for="topic" class="select">Choose your topic</label>
+      <select name="topic" id="topic" data-theme="a">
+        <option value="Menu">Menu Enquiry</option>
+        <option value="Booking">Booking Enquiry</option>
+        <option value="Jobs">Employment</option>
+        <option value="Wildlife" selected>Wildlife Enquiry</option>
+      </select>
+      <label for="content">What would you like to say?</label>
+      <textarea cols="40" rows="10" name="content" id="content" placeholder="Your Enquiry" data-theme="a"></textarea>
+      <p>When you're done...</p>
+      <input type="button" id="submit" name="submit" value="Send Contact" data-icon="check" data-iconpos="right" data-theme="a">
+    	</fieldset>
+    </form>
+  </div>
+  <!-- /content --> 
+  
+</div>
+<!-- /page -->
 
-        <div id="slider">
-
-            <div id="slide">
-
-            </div>
 
 
-        </div>
-        <div class="smallContainer">
-            <div class="smallButton">Button A</div>
-            <div class="smallButton">Button B</div>
-            <div class="smallButton">Button C</div>
-        </div>
-        <div id="reviews">
-            <h2>Review Information</h2>
-            <p>Cupidatat et irure cernantur, cernantur elit cillum ingeniis fugiat e cupidatat
-                quo magna, singulis dolor hic quibusdam fidelissimae et si velit quorum quorum
-                expetendis do do duis exquisitaque est elit iudicem est instituendarum qui de
-                quem nescius coniunctione. Expetendis ubi appellat ex hic malis distinguantur. A
-                multos anim si singulis. Incurreret non iudicem ne laborum fore fugiat ut varias
-                o arbitror eruditionem te tempor, duis id occaecat. Occaecat nisi illum
-                consequat duis, illum de cernantur ex nulla. Ne nostrud ad fabulas hic commodo
-                noster laborum. Culpa ex incurreret ad duis.</p>
-        </div>
-
-
-    </div><!-- /content -->
-
-    <div data-role="footer" data-position="fixed">
-        <h4>&copy 2014 - depictedMINDS</h4>
-    </div><!-- /footer -->
-</div><!-- /page -->
-
+<div data-role="page" id="thanks" data-theme="b"> 
+  <!-- an example of using some of jQueryMobile form elements --> 
+  <!-- Steve Lancaster -->
+  <div data-role="header"> <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" data-transition="slide" data-direction="reverse">Return</a>
+    <h1>Thankyou!!!!</h1>
+  </div>
+  <!-- /header -->
+  
+  <div role="main" class="ui-content">
+    <h1 style="text-align: center">Thanks for your contact!</h1>
+  </div>
+  <!-- /content --> 
+  
+</div>
+<!-- /page -->
+<script>
+	
+</script>
 </body>
 </html>
